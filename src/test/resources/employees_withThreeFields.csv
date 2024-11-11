@@ -1,0 +1,11 @@
+Id,name,salary,managerId
+123,Joe Doe,60000,
+124,Martin Chekov,45000,123
+125,Bob Ronstad,47000,123
+300,Alice Hasacat,50000,124
+305,Brett Hardleaf,34000,300
+250,Alice Frost,500007.77,124
+315,John White,34,305
+316,Philipp Renoir,30004,315
+317,Steeve McDumm,30004,316
+318,Oliver Hendrue,30004,317
