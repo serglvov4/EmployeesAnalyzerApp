@@ -75,3 +75,4 @@ app.maximal-reporting-line-length = 4
 
 * Java SE version 21
 * JUnit version 5.11.3
+* Apache Maven 3.9.9

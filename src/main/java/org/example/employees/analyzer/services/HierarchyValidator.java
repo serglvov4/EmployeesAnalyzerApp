@@ -1,6 +1,6 @@
 package org.example.employees.analyzer.services;
 
-import org.example.employees.analyzer.domain.data.Employee;
+import org.example.employees.analyzer.domain.data.StaffNode;
 import org.example.employees.analyzer.domain.dto.EmployeesDto;
 
 /**
@@ -13,5 +13,5 @@ public interface HierarchyValidator {
      * @param ceoEmployee Root CEO employee record
      * @param employeesDto Employees DTO collection
      */
-    void validate(Employee ceoEmployee, EmployeesDto employeesDto);
+    void validate(StaffNode ceoEmployee, EmployeesDto employeesDto);
 }

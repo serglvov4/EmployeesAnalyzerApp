@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -22,8 +23,9 @@ class EmployeesAnalyzerAppTest {
     }
 
     @AfterEach
-    public void restoreStreams() {
+    public void restoreStreams() throws IOException {
         System.setOut(originalOut);
+        outContent.close();
     }
 
     @Test

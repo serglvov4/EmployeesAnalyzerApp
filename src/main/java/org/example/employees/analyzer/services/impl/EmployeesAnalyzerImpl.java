@@ -1,6 +1,6 @@
 package org.example.employees.analyzer.services.impl;
 
-import org.example.employees.analyzer.domain.data.Employee;
+import org.example.employees.analyzer.domain.data.StaffNode;
 import org.example.employees.analyzer.services.EmployeesAnalyzer;
 import org.example.employees.analyzer.services.EmployeesReporter;
 import org.example.employees.analyzer.services.analyzers.EmployeeAnalyzer;
@@ -25,39 +25,39 @@ public class EmployeesAnalyzerImpl implements EmployeesAnalyzer {
 
     /**
      * Analyze employees and report result
-     * @param employee Root Employee for analysis
+     * @param staff Staff for analysis
      */
-    public void analyze(Employee employee) {
+    public void analyze(StaffNode staff) {
         employeesReporter.printTitle();
-        if (Objects.nonNull(employee)) {
-            analyzeEmployeesTree(employee);
+        if (Objects.nonNull(staff)) {
+            analyzeEmployeesTree(staff);
         }
         employeesReporter.printFooter();
     }
 
     /**
      * Analyze employees tree
-     * @param employee Root Employee for analysis
+     * @param staff Root Employee for analysis
      */
-    private void analyzeEmployeesTree(Employee employee) {
-        analyzeEmployee(employee);
-        employee.getSubordinates().stream()
-                .sorted(Comparator.comparingInt(Employee::getEmployeeId))
+    private void analyzeEmployeesTree(StaffNode staff) {
+        analyzeEmployee(staff);
+        staff.getSubordinates().stream()
+                .sorted(Comparator.comparingInt(subStaff -> subStaff.getEmployee().employeeId()))
                 .forEach(this::analyzeEmployeesTree);
     }
 
     /**
      * Perform analysis using list of employee analyzers and report result
-     * @param employee Analyzing Employee
+     * @param staff Analyzing Staff
      */
-    private void analyzeEmployee(Employee employee) {
+    private void analyzeEmployee(StaffNode staff) {
         List<String> messages = new ArrayList<>();
         analyzers.forEach(employeeAnalyzer ->
-                employeeAnalyzer.analyze(employee).ifPresent(messages::add));
+                employeeAnalyzer.analyze(staff).ifPresent(messages::add));
         if(!messages.isEmpty()) {
-            employeesReporter.report(employee.getEmployeeId(),
-                    employee.getFirstName(),
-                    employee.getLastName(),
+            employeesReporter.report(staff.getEmployee().employeeId(),
+                    staff.getEmployee().firstName(),
+                    staff.getEmployee().lastName(),
                     messages);
         }
     }

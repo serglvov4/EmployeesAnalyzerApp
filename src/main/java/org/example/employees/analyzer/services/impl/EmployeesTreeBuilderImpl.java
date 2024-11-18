@@ -1,6 +1,7 @@
 package org.example.employees.analyzer.services.impl;
 
 import org.example.employees.analyzer.domain.data.Employee;
+import org.example.employees.analyzer.domain.data.StaffNode;
 import org.example.employees.analyzer.domain.dto.EmployeeDto;
 import org.example.employees.analyzer.domain.dto.EmployeesDto;
 import org.example.employees.analyzer.exceptions.LogicalIntegrityException;
@@ -21,14 +22,14 @@ public class EmployeesTreeBuilderImpl implements EmployeesTreeBuilder {
      * @return Employee tree hierarchical structure
      */
     @Override
-    public Employee build(EmployeesDto employeesDto) {
+    public StaffNode build(EmployeesDto employeesDto) {
         EmployeeDto ceoDto = employeesDto.getCEO()
                 .orElseThrow(() -> new LogicalIntegrityException("Record for CEO should be present in file."));
-        Employee ceo = new Employee(
-                ceoDto.id(),
-                ceoDto.firstName(),
-                ceoDto.lastName(),
-                ceoDto.salary(),
+        StaffNode ceo = new StaffNode(
+                new Employee(ceoDto.id(),
+                        ceoDto.firstName(),
+                        ceoDto.lastName(),
+                        ceoDto.salary()),
                 null);
         Map<Integer, Set<EmployeeDto>> subordinates = employeesDto.getSubordinates();
         fillSubordinatesTree(subordinates, ceo);
@@ -38,23 +39,23 @@ public class EmployeesTreeBuilderImpl implements EmployeesTreeBuilder {
     /**
      * Fill subordinates tree using Employees DTO collection grouped by manager id
      * @param subordinates Employees DTO collection grouped by manager id
-     * @param employee Employee tree hierarchical structure
+     * @param staff Employee tree hierarchical structure
      */
     private void fillSubordinatesTree(Map<Integer, Set<EmployeeDto>> subordinates,
-                                      Employee employee) {
-        Set<EmployeeDto> subordinateDtos = subordinates.get(employee.getEmployeeId());
+                                      StaffNode staff) {
+        Set<EmployeeDto> subordinateDtos = subordinates.get(staff.getEmployee().employeeId());
         if (Objects.isNull(subordinateDtos)) {
             return;
         }
         subordinateDtos.stream()
-                .map(employeeDto -> new Employee(
-                        employeeDto.id(),
-                        employeeDto.firstName(),
-                        employeeDto.lastName(),
-                        employeeDto.salary(),
-                        employee))
+                .map(employeeDto -> new StaffNode(
+                        new Employee(employeeDto.id(),
+                                employeeDto.firstName(),
+                                employeeDto.lastName(),
+                                employeeDto.salary()),
+                        staff))
                 .forEach(currentEmployee -> {
-                    employee.addSubordinate(currentEmployee);
+                    staff.addSubordinate(currentEmployee);
                     fillSubordinatesTree(subordinates, currentEmployee);
                 });
     }

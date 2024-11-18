@@ -40,46 +40,46 @@ class CsvFileParserImplTest {
 
     @Test
     void parse_withTheSameIdAndManagerId() {
-        Path filePath;
+        String filePath;
         try {
-            filePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("employees_withTheSameIdAndManagerId.csv")).toURI());
+            filePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("employees_withTheSameIdAndManagerId.csv")).toURI()).toString();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        Assertions.assertThrows(LogicalIntegrityException.class, () -> fileParser.parse(filePath.toString()));
+        Assertions.assertThrows(LogicalIntegrityException.class, () -> fileParser.parse(filePath));
     }
 
     @Test
     void parse_withWrongDelimiter() {
-        Path filePath;
+        String filePath;
         try {
-            filePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("employees_withWrongDelimiter.csv")).toURI());
+            filePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("employees_withWrongDelimiter.csv")).toURI()).toString();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        Assertions.assertThrows(CsvFileParsingException.class, () -> fileParser.parse(filePath.toString()));
+        Assertions.assertThrows(CsvFileParsingException.class, () -> fileParser.parse(filePath));
     }
 
     @Test
     void parse_withThreeFields() {
-        Path filePath;
+        String filePath;
         try {
-            filePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("employees_withThreeFields.csv")).toURI());
+            filePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("employees_withThreeFields.csv")).toURI()).toString();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        Assertions.assertThrows(LogicalIntegrityException.class, () -> fileParser.parse(filePath.toString()));
+        Assertions.assertThrows(LogicalIntegrityException.class, () -> fileParser.parse(filePath));
     }
 
     @Test
     void parse_withEmptyLine() {
-        Path filePath;
+        String filePath;
         try {
-            filePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("employees_withEmptyLine.csv")).toURI());
+            filePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource("employees_withEmptyLine.csv")).toURI()).toString();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        CsvFileParsingException exception = Assertions.assertThrows(CsvFileParsingException.class, () -> fileParser.parse(filePath.toString()));
+        CsvFileParsingException exception = Assertions.assertThrows(CsvFileParsingException.class, () -> fileParser.parse(filePath));
         Assertions.assertEquals("CSV file parsing error: Line from file is empty", exception.getMessage());
     }
 }

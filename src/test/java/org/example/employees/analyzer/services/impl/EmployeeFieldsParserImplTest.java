@@ -4,6 +4,9 @@ import org.example.employees.analyzer.exceptions.CsvFileParsingException;
 import org.example.employees.analyzer.services.EmployeeFieldsParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
 
@@ -17,27 +20,15 @@ class EmployeeFieldsParserImplTest {
         Assertions.assertEquals(123, employeeId);
     }
 
-    @Test
-    void parseEmployeeId_withNullEmployeeId() {
-        String employeeIdValue = null;
+    @ParameterizedTest
+    @NullSource
+    void parseEmployeeId_withNullEmployeeId(String employeeIdValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseEmployeeId(employeeIdValue));
     }
 
-    @Test
-    void parseEmployeeId_withBlankEmployeeId() {
-        String employeeIdValue = "   ";
-        Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseEmployeeId(employeeIdValue));
-    }
-
-    @Test
-    void parseEmployeeId_withEmptyEmployeeId() {
-        String employeeIdValue = "";
-        Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseEmployeeId(employeeIdValue));
-    }
-
-    @Test
-    void parseEmployeeId_withWrongFormatEmployeeId() {
-        String employeeIdValue = "A123";
+    @ParameterizedTest
+    @ValueSource(strings = {"   ", "", "A123"})
+    void parseEmployeeId_withCsvFileParsingException(String employeeIdValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseEmployeeId(employeeIdValue));
     }
 
@@ -48,21 +39,15 @@ class EmployeeFieldsParserImplTest {
         Assertions.assertEquals("Joe", firstName);
     }
 
-    @Test
-    void parseFirstName_withNullFirstName() {
-        String firstNameValue = null;
+    @ParameterizedTest
+    @NullSource
+    void parseFirstName_withNullFirstName(String firstNameValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseFirstName(firstNameValue));
     }
 
-    @Test
-    void parseFirstName_withBlankFirstName() {
-        String firstNameValue = "   ";
-        Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseFirstName(firstNameValue));
-    }
-
-    @Test
-    void parseFirstName_withEmptyFirstName() {
-        String firstNameValue = "";
+    @ParameterizedTest
+    @ValueSource(strings = {"   ", ""})
+    void parseFirstName_withCsvFileParsingException(String firstNameValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseFirstName(firstNameValue));
     }
 
@@ -73,21 +58,15 @@ class EmployeeFieldsParserImplTest {
         Assertions.assertEquals("Doe", lastName);
     }
 
-    @Test
-    void parseLastName_withNullLastName() {
-        String lastNameValue = null;
+    @ParameterizedTest
+    @NullSource
+    void parseLastName_withNullLastName(String lastNameValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseLastName(lastNameValue));
     }
 
-    @Test
-    void parseLastName_withBlankLastName() {
-        String lastNameValue = "   ";
-        Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseLastName(lastNameValue));
-    }
-
-    @Test
-    void parseLastName_withEmptyLastName() {
-        String lastNameValue = "";
+    @ParameterizedTest
+    @ValueSource(strings = {"   ", ""})
+    void parseLastName_withCsvFileParsingException(String lastNameValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseLastName(lastNameValue));
     }
 
@@ -98,27 +77,15 @@ class EmployeeFieldsParserImplTest {
         Assertions.assertEquals(new BigDecimal("50000"), salary);
     }
 
-    @Test
-    void parseSalary_withNullSalary() {
-        String salaryValue = null;
+    @ParameterizedTest
+    @NullSource
+    void parseSalary_withNullSalary(String salaryValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseSalary(salaryValue));
     }
 
-    @Test
-    void parseSalary_withBlankSalary() {
-        String salaryValue = "   ";
-        Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseSalary(salaryValue));
-    }
-
-    @Test
-    void parseSalary_withEmptySalary() {
-        String salaryValue = "";
-        Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseSalary(salaryValue));
-    }
-
-    @Test
-    void parseSalary_withWrongFormatSalary() {
-        String salaryValue = "A45000";
+    @ParameterizedTest
+    @ValueSource(strings = {"   ", "", "A45000"})
+    void parseSalary_withCsvFileParsingException(String salaryValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseSalary(salaryValue));
     }
 
@@ -129,27 +96,15 @@ class EmployeeFieldsParserImplTest {
         Assertions.assertEquals(123, managerId);
     }
 
-    @Test
-    void parseManagerId_withNullEmployeeId() {
-        String managerIdValue = null;
+    @ParameterizedTest
+    @NullSource
+    void parseManagerId_withNullEmployeeId(String managerIdValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseManagerId(managerIdValue));
     }
 
-    @Test
-    void parseManagerId_withBlankEmployeeId() {
-        String managerIdValue = "   ";
-        Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseManagerId(managerIdValue));
-    }
-
-    @Test
-    void parseManagerId_withEmptyEmployeeId() {
-        String managerIdValue = "";
-        Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseManagerId(managerIdValue));
-    }
-
-    @Test
-    void parseManagerId_withWrongFormatEmployeeId() {
-        String managerIdValue = "A123";
+    @ParameterizedTest
+    @ValueSource(strings = {"   ", "", "A123"})
+    void parseManagerId_withCsvFileParsingException(String managerIdValue) {
         Assertions.assertThrows(CsvFileParsingException.class, () -> employeeFieldsParser.parseManagerId(managerIdValue));
     }
 }

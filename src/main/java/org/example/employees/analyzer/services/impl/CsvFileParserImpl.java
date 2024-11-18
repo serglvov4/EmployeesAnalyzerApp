@@ -40,8 +40,10 @@ public class CsvFileParserImpl implements CsvFileParser {
                     .skip(1)
                     .map(this::getFieldValues)
                     .map(this::createEmployeeDto)
-                    .peek(employeeDtoValidator::validateEmployeeIds)
-                    .forEach(employeesDto::addEmployeeDto);
+                    .forEach(employeeDto -> {
+                        employeeDtoValidator.validateEmployeeIds(employeeDto);
+                        employeesDto.addEmployeeDto(employeeDto);
+                    });
         } catch (LogicalIntegrityException logicalIntegrityException) {
             throw logicalIntegrityException;
         } catch (Exception exception) {
@@ -51,7 +53,7 @@ public class CsvFileParserImpl implements CsvFileParser {
     }
 
     /**
-     * Split line from file and get values of filds
+     * Split line from file and get values of fields
      * @param line Line from file
      * @return Values of fields for Employee DTO
      */

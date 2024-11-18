@@ -1,6 +1,6 @@
 package org.example.employees.analyzer.services.analyzers;
 
-import org.example.employees.analyzer.domain.data.Employee;
+import org.example.employees.analyzer.domain.data.StaffNode;
 
 import java.util.Optional;
 
@@ -14,5 +14,5 @@ public interface EmployeeAnalyzer {
      * @param employee Employee
      * @return Result of analysis
      */
-    Optional<String> analyze(Employee employee);
+    Optional<String> analyze(StaffNode employee);
 }

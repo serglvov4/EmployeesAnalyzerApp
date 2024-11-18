@@ -1,7 +1,7 @@
 package org.example.employees.analyzer.services.impl;
 
-import org.example.employees.analyzer.domain.data.Employee;
-import org.example.employees.analyzer.domain.data.EmployeeProvider;
+import org.example.employees.analyzer.domain.data.StaffNode;
+import org.example.employees.analyzer.domain.data.StaffTreeProvider;
 import org.example.employees.analyzer.services.EmployeesAnalyzer;
 import org.example.employees.analyzer.services.analyzers.impl.ReportingLineLengthAnalyzerImpl;
 import org.example.employees.analyzer.services.analyzers.impl.SalaryAnalyzerImpl;
@@ -16,7 +16,7 @@ import java.util.List;
 
 class EmployeesAnalyzerImplTest {
     private final EmployeesAnalyzer employeesAnalyzer;
-    private final EmployeeProvider employeeProvider;
+    private final StaffTreeProvider staffTreeProvider;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
@@ -26,7 +26,7 @@ class EmployeesAnalyzerImplTest {
                         new SalaryAnalyzerImpl(new PropertiesProviderImpl()),
                         new ReportingLineLengthAnalyzerImpl(new PropertiesProviderImpl())
         ));
-        this.employeeProvider = new EmployeeProvider();
+        this.staffTreeProvider = new StaffTreeProvider();
     }
 
     @BeforeEach
@@ -41,7 +41,7 @@ class EmployeesAnalyzerImplTest {
 
     @Test
     void analyze_success() {
-        Employee employee = Assertions.assertDoesNotThrow(employeeProvider::provide);
+        StaffNode employee = Assertions.assertDoesNotThrow(staffTreeProvider::provide);
         Assertions.assertDoesNotThrow(() -> employeesAnalyzer.analyze(employee));
         String result = "====================================================================" +
                 System.lineSeparator() +

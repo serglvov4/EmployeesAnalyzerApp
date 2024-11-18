@@ -1,6 +1,6 @@
 package org.example.employees.analyzer.services;
 
-import org.example.employees.analyzer.domain.data.Employee;
+import org.example.employees.analyzer.domain.data.StaffNode;
 import org.example.employees.analyzer.domain.dto.EmployeesDto;
 
 /**
@@ -13,5 +13,5 @@ public interface EmployeesTreeBuilder {
      * @param employeesDto Employees DTO collection
      * @return Employee tree - hierarchical data structure
      */
-    Employee build(EmployeesDto employeesDto);
+    StaffNode build(EmployeesDto employeesDto);
 }

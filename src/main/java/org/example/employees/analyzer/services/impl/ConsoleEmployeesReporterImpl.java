@@ -8,6 +8,7 @@ import java.util.List;
  * Print analytical report about employees to console
  */
 public class ConsoleEmployeesReporterImpl implements EmployeesReporter {
+    private static final String DIVIDING_LINE = "====================================================================";
 
     /**
      * Print report about an employee
@@ -40,9 +41,9 @@ public class ConsoleEmployeesReporterImpl implements EmployeesReporter {
      */
     @Override
     public void printTitle() {
-        System.out.println("====================================================================");
+        System.out.println(DIVIDING_LINE);
         System.out.println("                ANALYTICAL REPORT ON PERSONNEL");
-        System.out.println("====================================================================");
+        System.out.println(DIVIDING_LINE);
     }
 
     /**
@@ -50,6 +51,6 @@ public class ConsoleEmployeesReporterImpl implements EmployeesReporter {
      */
     @Override
     public void printFooter() {
-        System.out.println("====================================================================");
+        System.out.println(DIVIDING_LINE);
     }
 }

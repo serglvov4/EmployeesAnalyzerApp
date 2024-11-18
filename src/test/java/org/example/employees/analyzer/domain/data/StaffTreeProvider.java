@@ -8,13 +8,13 @@ import org.example.employees.analyzer.services.impl.EmployeesTreeBuilderImpl;
 /**
  * Provide correct Employee tree structure
  */
-public class EmployeeProvider {
+public class StaffTreeProvider {
 
     /**
      * Provide correct Employee tree structure
      * @return Employee tree structure
      */
-    public Employee provide() {
+    public StaffNode provide() {
         EmployeesDto employeesDto = new EmployeesDtoProvider().provide();
         EmployeesTreeBuilder employeesTreeBuilder = new EmployeesTreeBuilderImpl();
         return employeesTreeBuilder.build(employeesDto);

@@ -1,6 +1,6 @@
 package org.example.employees.analyzer.services.analyzers.impl;
 
-import org.example.employees.analyzer.domain.data.Employee;
+import org.example.employees.analyzer.domain.data.StaffNode;
 import org.example.employees.analyzer.services.PropertiesProvider;
 import org.example.employees.analyzer.services.analyzers.EmployeeAnalyzer;
 
@@ -22,7 +22,7 @@ public class ReportingLineLengthAnalyzerImpl implements EmployeeAnalyzer {
      * @return Result of reporting line length analysis
      */
     @Override
-    public Optional<String> analyze(Employee employee) {
+    public Optional<String> analyze(StaffNode employee) {
         String message = null;
         if (employee.getHierarchyLevel() > (propertiesProvider.getMaximalReportingLineLength() + 1)) {
             message = " - reporting line is too long (by " + (employee.getHierarchyLevel() - propertiesProvider.getMaximalReportingLineLength() - 1) + " levels)";

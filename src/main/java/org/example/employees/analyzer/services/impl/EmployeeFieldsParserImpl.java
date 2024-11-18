@@ -10,6 +10,7 @@ import java.util.Objects;
  * Validate and parse fields string values from CSV file
  */
 public class EmployeeFieldsParserImpl implements EmployeeFieldsParser {
+    private static final String EMPTY_VALUE_MESSAGE = "Empty value of field";
 
     /**
      * Validate and parse Employee ID value from CSV file
@@ -19,7 +20,7 @@ public class EmployeeFieldsParserImpl implements EmployeeFieldsParser {
     @Override
     public Integer parseEmployeeId(String employeeId) {
         if (Objects.isNull(employeeId) || employeeId.isBlank()) {
-            throw getParsingException("Employee Id", "Empty value of field");
+            throw getParsingException("Employee Id", EMPTY_VALUE_MESSAGE);
         }
         try {
             return Integer.parseInt(employeeId);
@@ -36,7 +37,7 @@ public class EmployeeFieldsParserImpl implements EmployeeFieldsParser {
     @Override
     public String parseFirstName(String firstName) {
         if (Objects.isNull(firstName) || firstName.isBlank()) {
-            throw getParsingException("First Name", "Empty value of field");
+            throw getParsingException("First Name", EMPTY_VALUE_MESSAGE);
         }
         return firstName.trim();
     }
@@ -49,7 +50,7 @@ public class EmployeeFieldsParserImpl implements EmployeeFieldsParser {
     @Override
     public String parseLastName(String lastName) {
         if (Objects.isNull(lastName) || lastName.isBlank()) {
-            throw getParsingException("Last Name", "Empty value of field");
+            throw getParsingException("Last Name", EMPTY_VALUE_MESSAGE);
         }
         return lastName.trim();
     }
@@ -62,7 +63,7 @@ public class EmployeeFieldsParserImpl implements EmployeeFieldsParser {
     @Override
     public BigDecimal parseSalary(String salary) {
         if (Objects.isNull(salary) || salary.isBlank()) {
-            throw getParsingException("Salary", "Empty value of field");
+            throw getParsingException("Salary", EMPTY_VALUE_MESSAGE);
         }
         try {
             return new BigDecimal(salary);
@@ -79,7 +80,7 @@ public class EmployeeFieldsParserImpl implements EmployeeFieldsParser {
     @Override
     public Integer parseManagerId(String managerId) {
         if (Objects.isNull(managerId) || managerId.isBlank()) {
-            throw getParsingException("Manager Id", "Empty value of field");
+            throw getParsingException("Manager Id", EMPTY_VALUE_MESSAGE);
         }
         try {
             return Integer.parseInt(managerId);

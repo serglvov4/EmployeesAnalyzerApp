@@ -1,6 +1,6 @@
 package org.example.employees.analyzer.services.impl;
 
-import org.example.employees.analyzer.domain.data.Employee;
+import org.example.employees.analyzer.domain.data.StaffNode;
 import org.example.employees.analyzer.domain.dto.EmployeesDto;
 import org.example.employees.analyzer.domain.dto.EmployeesDtoProvider;
 import org.example.employees.analyzer.exceptions.LogicalIntegrityException;
@@ -26,26 +26,26 @@ class EmployeesTreeBuilderImplTest {
     @Test
     void build_success() {
         EmployeesDto employeesDto = employeesDtoProvider.provide();
-        Employee employee = Assertions.assertDoesNotThrow(() -> employeesTreeBuilder.build(employeesDto));
-        Assertions.assertNotNull(employee);
-        Assertions.assertDoesNotThrow(() -> hierarchyValidator.validate(employee, employeesDto));
-        Assertions.assertEquals(123, employee.getEmployeeId());
-        Assertions.assertEquals("Joe", employee.getFirstName());
-        Assertions.assertEquals("Doe", employee.getLastName());
-        Assertions.assertEquals(new BigDecimal("60000"), employee.getSalary());
-        Assertions.assertNull(employee.getManager());
-        Assertions.assertEquals(0, employee.getHierarchyLevel());
-        Assertions.assertEquals(2, employee.getSubordinates().size());
-        Assertions.assertEquals(new BigDecimal("46000.00"), employee.getAverageSubordinatesSalary());
-        employee.getSubordinates().stream()
+        StaffNode staff = Assertions.assertDoesNotThrow(() -> employeesTreeBuilder.build(employeesDto));
+        Assertions.assertNotNull(staff);
+        Assertions.assertDoesNotThrow(() -> hierarchyValidator.validate(staff, employeesDto));
+        Assertions.assertEquals(123, staff.getEmployee().employeeId());
+        Assertions.assertEquals("Joe", staff.getEmployee().firstName());
+        Assertions.assertEquals("Doe", staff.getEmployee().lastName());
+        Assertions.assertEquals(new BigDecimal("60000"), staff.getEmployee().salary());
+        Assertions.assertNull(staff.getManager());
+        Assertions.assertEquals(0, staff.getHierarchyLevel());
+        Assertions.assertEquals(2, staff.getSubordinates().size());
+        Assertions.assertEquals(new BigDecimal("46000.00"), staff.getAverageSubordinatesSalary());
+        staff.getSubordinates().stream()
                 .max(Comparator.comparing(o -> o.getSubordinates().size()))
                 .ifPresent(emp -> {
                     Assertions.assertEquals(2, emp.getSubordinates().size());
-                    Assertions.assertEquals(124, emp.getEmployeeId());
-                    Assertions.assertEquals("Martin", emp.getFirstName());
-                    Assertions.assertEquals("Chekov", emp.getLastName());
-                    Assertions.assertEquals(new BigDecimal("45000"), emp.getSalary());
-                    Assertions.assertEquals(123, emp.getManager().getEmployeeId());
+                    Assertions.assertEquals(124, emp.getEmployee().employeeId());
+                    Assertions.assertEquals("Martin", emp.getEmployee().firstName());
+                    Assertions.assertEquals("Chekov", emp.getEmployee().lastName());
+                    Assertions.assertEquals(new BigDecimal("45000"), emp.getEmployee().salary());
+                    Assertions.assertEquals(123, emp.getManager().getEmployee().employeeId());
                     emp.getSubordinates()
                             .forEach(empl -> Assertions.assertEquals(2, empl.getHierarchyLevel()));
                 });

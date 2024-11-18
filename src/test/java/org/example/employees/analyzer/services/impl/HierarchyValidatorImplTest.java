@@ -1,6 +1,6 @@
 package org.example.employees.analyzer.services.impl;
 
-import org.example.employees.analyzer.domain.data.Employee;
+import org.example.employees.analyzer.domain.data.StaffNode;
 import org.example.employees.analyzer.domain.dto.EmployeesDto;
 import org.example.employees.analyzer.domain.dto.EmployeesDtoProvider;
 import org.example.employees.analyzer.exceptions.LogicalIntegrityException;
@@ -23,14 +23,14 @@ class HierarchyValidatorImplTest {
     @Test
     void validate_success() {
         EmployeesDto employeesDto = employeesDtoProvider.provide();
-        Employee employeeCeo = employeesTreeBuilder.build(employeesDto);
+        StaffNode employeeCeo = employeesTreeBuilder.build(employeesDto);
         Assertions.assertDoesNotThrow(() -> hierarchyValidator.validate(employeeCeo, employeesDto));
     }
 
     @Test
     void validate_withWrongHierarchy() {
         EmployeesDto employeesDto = employeesDtoProvider.provideWithWrongHierarchy();
-        Employee employeeCeo = employeesTreeBuilder.build(employeesDto);
+        StaffNode employeeCeo = employeesTreeBuilder.build(employeesDto);
         LogicalIntegrityException exception = Assertions.assertThrows(LogicalIntegrityException.class,
                 () -> hierarchyValidator.validate(employeeCeo, employeesDto));
         Assertions.assertEquals(
